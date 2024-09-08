@@ -5,8 +5,9 @@
   <img src="https://img.shields.io/badge/rust-red?style=for-the-badge&label=Language&color=%231457b6" />
   <img src="https://img.shields.io/badge/mit-red?style=for-the-badge&label=License&color=%231457b6" />
 </div>
+<br>
 
-### 👀 Installation
+## 👀 Installation
 Short instruction:
 1. Download the [latest release](https://github.com/mealet/mul0/releases/latest) for you'r system (linux, windows, macos)
 2. Move it to any folder on you'r PC
@@ -34,7 +35,7 @@ Mul0 output (printed to stderr):
 Hello, World! 2 + 2 = 4
 ```
 
-### 🦀 How it works
+## 🦀 How it works
 Algorithm takes first byte and uses it as a key. Next steps are pretty simple: <br>
 1. Multiply every byte on key's byte
 2. Convert every byte to hexdecimal number and resize it to 4 chars
