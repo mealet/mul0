@@ -1,8 +1,16 @@
+// Mul0 Hashing Algorithm
+// =======================================
+// https://github.com/mealet/mul0
+// Project licensed under the MIT License.
+// See more in LICENSE file.
+
 const APP_NAME: &str = env!("CARGO_PKG_NAME");
 const APP_VERSION: &str = env!("CARGO_PKG_VERSION");
+const ACCIENT_COLOR: (u8, u8, u8) = (28, 153, 255);
 
 use clap::{arg, Command};
 use colored::Colorize;
+use std::io::{stdin, stdout, Write};
 
 pub struct Cli;
 
@@ -28,18 +36,30 @@ impl Cli {
             .subcommand(Command::new("manual").about("Manual interactive mode"))
     }
 
-    pub fn make_print(input: String, output: String) {
+    pub fn make_print(output: String) {
         // Printing colored message in stdout, and returning clear result into stderr
         println!(
-            "{}\n{}",
-            "Provided user input:".truecolor(252, 73, 3),
-            input
-        );
-        println!(
             "{}",
-            "Mul0 hashed output (printed to stderr):".truecolor(252, 73, 3)
+            "Mul0 output (printed to stderr):".truecolor(
+                ACCIENT_COLOR.0,
+                ACCIENT_COLOR.1,
+                ACCIENT_COLOR.2
+            )
         );
         eprint!("{}", output);
         println!("");
+    }
+
+    pub fn get_input(display: String) -> String {
+        let mut buffer = String::new();
+
+        print!(
+            "{}",
+            display.truecolor(ACCIENT_COLOR.0, ACCIENT_COLOR.1, ACCIENT_COLOR.2)
+        );
+        let _ = stdout().flush();
+        let _ = stdin().read_line(&mut buffer);
+
+        return buffer.trim().to_string();
     }
 }
