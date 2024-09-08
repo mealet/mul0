@@ -14,11 +14,11 @@ Short instruction:
 
 ### 🧭 Usage
 1. Open terminal in **mul0** directory and run it:
-```bash
-// MacOS or Linux
+```sh
+# MacOS or Linux
 ./mul0
 
-// Windows
+# Windows
 ./mul0.exe
 ```
 2. Follow instructions from _help_ message
