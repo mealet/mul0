@@ -22,15 +22,14 @@ jobs:
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:
-          workspaces: './src-tauri -> target'
+          workspaces: './target'
 
-      - name: Install and build
-        if: matrix.platform == 'ubuntu-20.04'
+      - name: Rust Build
         run: |
           cargo build --release
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.target }}-artifact
-          path: target/${{ matrix.target }}/release/
+          name: ${{ matrix.platform }}-artifact
+          path: target/release/
