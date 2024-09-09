@@ -11,9 +11,9 @@ pub struct Mul0;
 
 impl Mul0 {
     pub fn hash(input: String) -> String {
-        let bytes: Vec<u8> = input.bytes().collect();
-        let key_byte = bytes[KEY_POSITION];
-        let output_bytes: Vec<u16> = bytes
+        let input_bytes: Vec<u8> = input.bytes().collect();
+        let key_byte = input_bytes[KEY_POSITION];
+        let output_bytes: Vec<u16> = input_bytes
             .iter()
             .map(|&byte| byte as u16 * key_byte as u16)
             .collect();
