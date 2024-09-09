@@ -13,7 +13,7 @@ Short instruction:
 2. Move it to any folder on you'r PC
 3. Done
 
-### 🧭 Usage
+## 🧭 Usage
 1. Open terminal in **mul0** directory and run it:
 ```sh
 # MacOS or Linux
