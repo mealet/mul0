@@ -9,6 +9,20 @@ const KEY_PLACE_END: bool = true;
 
 pub struct Mul0;
 
+#[macro_export]
+macro_rules! hash {
+    ( $input:expr ) => {
+        Mul0::hash($input)
+    };
+}
+
+#[macro_export]
+macro_rules! dehash {
+    ( $input:expr ) => {
+        Mul0::dehash($input)
+    };
+}
+
 impl Mul0 {
     pub fn hash(input: String) -> String {
         let input_bytes: Vec<u8> = input.bytes().collect();

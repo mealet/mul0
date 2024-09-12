@@ -7,7 +7,7 @@
 mod algorithms;
 mod cli;
 
-use {algorithms::Mul0, cli::Cli};
+use {algorithms::*, cli::Cli};
 
 fn main() {
     // getting arguments
@@ -16,14 +16,14 @@ fn main() {
     match matches.subcommand() {
         Some(("hash", sub_matches)) => {
             let input = sub_matches.get_one::<String>("STRING").expect("required");
-            let output = Mul0::hash(input.clone());
+            let output = hash!(input.clone());
 
             // Printing colored message to stdout, and clear output to stderr
             let _ = Cli::make_print(output);
         }
         Some(("dehash", sub_matches)) => {
             let input = sub_matches.get_one::<String>("STRING").expect("required");
-            let output = Mul0::dehash(input.clone());
+            let output = dehash!(input.clone());
 
             // Printing colored message to stdout, and clear output to stderr
             let _ = Cli::make_print(output);
@@ -45,9 +45,9 @@ fn main() {
 
             // Hashing and doing output
             let output = if mode == 0 {
-                Mul0::hash(input.to_string())
+                hash!(input.to_string())
             } else {
-                Mul0::dehash(input.to_string())
+                dehash!(input.to_string())
             };
 
             let _ = Cli::make_print(output);
