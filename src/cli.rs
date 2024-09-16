@@ -4,13 +4,27 @@
 // Project licensed under the MIT License.
 // See more in LICENSE file.
 
-const APP_NAME: &str = env!("CARGO_PKG_NAME");
-const APP_VERSION: &str = env!("CARGO_PKG_VERSION");
+pub const APP_NAME: &str = env!("CARGO_PKG_NAME");
+pub const APP_VERSION: &str = env!("CARGO_PKG_VERSION");
 const ACCIENT_COLOR: (u8, u8, u8) = (28, 153, 255);
 
 use clap::{arg, Command};
 use colored::Colorize;
-use std::io::{stdin, stdout, Write};
+use std::io::{stdin, stdout, Write, Read};
+
+macro_rules! error {
+    ($input:expr) => {
+        println!("{} {}", "error:".red(), $input)
+    };
+}
+
+macro_rules! successful {
+    ($msg:expr) => {
+        println!("{} {}", "successful:".green(), $msg)
+    };
+}
+
+pub(crate) use {error, successful};
 
 pub struct Cli;
 
@@ -33,11 +47,34 @@ impl Cli {
                     .about("Returns hashed string's source")
                     .arg(arg!(<STRING> "String input from user")),
             )
+            .subcommand(
+                Command::new("file")
+                    .about("Provides user to hash and dehash file")
+                    .args_conflicts_with_subcommands(true)
+                    .flatten_help(true)
+                    .subcommand(Command::new("hash").arg(arg!(<PATH>)))
+                    .subcommand(Command::new("dehash").arg(arg!(<PATH>)))
+            )
             .subcommand(Command::new("manual").about("Manual interactive mode"))
     }
 
+    pub fn get_file_bytes(path: String) -> Vec<u8> {
+        let mut file = std::fs::File::open(path.clone()).unwrap_or_else(|_| {
+            error!(format!("File `{}` not found!", path));
+            std::process::exit(1);
+        });
+
+        let mut buffer = Vec::new();
+        let _ = file.read_to_end(&mut buffer).unwrap_or_else(|_| {
+            error!(format!("Cannot read file `{}`", path));
+            std::process::exit(1);
+        });
+
+        return buffer;
+    }
+
     pub fn make_print(output: String) {
-        // Printing colored message in stdout, and returning clear result into stderr
+        // Printing colored message in standard output, and returning clear result into stderr
         println!(
             "{}",
             "Mul0 output (printed to stderr):".truecolor(

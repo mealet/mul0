@@ -24,8 +24,8 @@ macro_rules! dehash {
 }
 
 impl Mul0 {
-    pub fn hash(input: String) -> String {
-        let input_bytes: Vec<u8> = input.bytes().collect();
+    pub fn hash(input: &[u8]) -> String {
+        let input_bytes: Vec<u8> = input.to_vec();
         let key_byte = input_bytes[KEY_POSITION];
         let output_bytes: Vec<u16> = input_bytes
             .iter()
@@ -59,7 +59,7 @@ impl Mul0 {
         };
     }
 
-    pub fn dehash(input: String) -> String {
+    pub fn dehash(input: String) -> Vec<u8> {
         let mut input_chars = input.chars().collect::<Vec<char>>();
         let mut _key = String::new();
 
@@ -92,6 +92,6 @@ impl Mul0 {
             })
             .collect();
 
-        return String::from_utf8_lossy(&calculated_chars).to_string();
+        return calculated_chars;
     }
 }
