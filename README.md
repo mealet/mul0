@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://github.com/user-attachments/assets/f7647eab-c556-402a-a1fa-44e7f9146d59" /> <br/>
 
-  <img src="https://img.shields.io/badge/0.1.3-red?style=for-the-badge&label=Version&color=%231457b6" />
+  <img src="https://img.shields.io/badge/0.1.4-red?style=for-the-badge&label=Version&color=%231457b6" />
   <img src="https://img.shields.io/badge/rust-red?style=for-the-badge&label=Language&color=%231457b6" />
   <img src="https://img.shields.io/badge/mit-red?style=for-the-badge&label=License&color=%231457b6" />
 </div>
