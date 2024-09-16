@@ -7,7 +7,7 @@
 mod algorithms;
 mod cli;
 
-use {algorithms::*, cli::Cli, std::io::Write, colored::Colorize};
+use {algorithms::*, cli::Cli, colored::Colorize, std::io::Write};
 
 fn main() {
     // Getting arguments
@@ -57,27 +57,41 @@ fn main() {
 
             match subcommand {
                 ("hash", sub_matches) => {
-                    let path_to_file = sub_matches.get_one::<String>("PATH").expect("required");
+                    let path_to_file = sub_matches.get_one::<String>("PATH").unwrap_or_else(|| {
+                        cli::error!("Please type right path to file!");
+                        std::process::exit(1);
+                    });
                     let file_bytes = Cli::get_file_bytes(path_to_file.clone());
                     let output = hash!(&file_bytes);
 
-                    let mut new_file = std::fs::File::create(format!("{}.{}", path_to_file, cli::APP_NAME)).expect("Unable to use filesystem!");
+                    let mut new_file =
+                        std::fs::File::create(format!("{}.{}", path_to_file, cli::APP_NAME))
+                            .expect("Unable to use filesystem!");
                     let _ = new_file.write_all(&output.bytes().collect::<Vec<u8>>());
 
                     cli::successful!("File hashed!");
-                },
+                }
                 ("dehash", sub_matches) => {
-                    let path_to_file = sub_matches.get_one::<String>("PATH").expect("required");
-                    let file_hash = String::from_utf8_lossy(&Cli::get_file_bytes(path_to_file.clone())).to_string();
+                    let path_to_file = sub_matches.get_one::<String>("PATH").unwrap_or_else(|| {
+                        cli::error!("Please type right path to file!");
+                        std::process::exit(1);
+                    });
+                    let file_hash =
+                        String::from_utf8_lossy(&Cli::get_file_bytes(path_to_file.clone()))
+                            .to_string();
                     let mut output = dehash!(file_hash);
 
-                    let path_fmt = format!("mul0-{}", path_to_file.replace(format!(".{}", cli::APP_NAME).as_str(), ""));
-                    let mut output_file = std::fs::File::create(path_fmt).expect("Unable to use filysystem!");
+                    let path_fmt = format!(
+                        "mul0-{}",
+                        path_to_file.replace(format!(".{}", cli::APP_NAME).as_str(), "")
+                    );
+                    let mut output_file =
+                        std::fs::File::create(path_fmt).expect("Unable to use filysystem!");
                     let _ = output_file.write_all(&mut output);
 
                     cli::successful!("File dehashed!");
-                },
-                _ => unreachable!()
+                }
+                _ => unreachable!(),
             }
         }
         _ => unreachable!(),

@@ -10,7 +10,7 @@ const ACCIENT_COLOR: (u8, u8, u8) = (28, 153, 255);
 
 use clap::{arg, Command};
 use colored::Colorize;
-use std::io::{stdin, stdout, Write, Read};
+use std::io::{stdin, stdout, Read, Write};
 
 macro_rules! error {
     ($input:expr) => {
@@ -53,7 +53,7 @@ impl Cli {
                     .args_conflicts_with_subcommands(true)
                     .flatten_help(true)
                     .subcommand(Command::new("hash").arg(arg!(<PATH>)))
-                    .subcommand(Command::new("dehash").arg(arg!(<PATH>)))
+                    .subcommand(Command::new("dehash").arg(arg!(<PATH>))),
             )
             .subcommand(Command::new("manual").about("Manual interactive mode"))
     }
